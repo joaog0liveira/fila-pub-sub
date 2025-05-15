@@ -1,0 +1,76 @@
+spring:
+  application:
+    name: fila-pub-sub
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  cloud:
+    stream:
+      defaultBinder: rabbit
+      bindings:
+
+        # Producer: Envia o pedido criado para processamento
+        enviarPedido-out-0:
+          destination: fila-processamento-pedidos
+          content-type: application/json
+
+        # Consumer: Processa o pedido vindo da fila de processamento
+        processarPedido-in-0:
+          destination: fila-processamento-pedidos
+          content-type: application/json
+
+        # Producer: Envia pedido processado para transporte
+        enviarParaTransporte-out-0:
+          destination: fila-transporte-pedidos
+          content-type: application/json
+
+        # Producer: Evento pedido processado (pub/sub)
+        eventoPedidoProcessado-out-0:
+          destination: evento-pedido-processado
+          content-type: application/json
+
+        # Consumer: Transporta pedidos
+        transportarPedido-in-0:
+          destination: fila-transporte-pedidos
+          content-type: application/json
+
+        # Producer: Evento pedido entregue (pub/sub)
+        eventoPedidoEntregue-out-0:
+          destination: evento-pedido-entregue
+          content-type: application/json
+
+        # Consumers: serviços interessados nos eventos
+        notificarPedidoProcessado-in-0:
+          destination: evento-pedido-processado
+          content-type: application/json
+        auditarPedidoProcessado-in-0:
+          destination: evento-pedido-processado
+          content-type: application/json
+        notificarPedidoEntregue-in-0:
+          destination: evento-pedido-entregue
+          content-type: application/json
+        auditarPedidoEntregue-in-0:
+          destination: evento-pedido-entregue
+          content-type: application/json
+
+      rabbit:
+        bindings:
+          enviarPedido-out-0:
+            producer:
+              routing-key-expression: '''fila-processamento-pedidos'''
+          enviarParaTransporte-out-0:
+            producer:
+              routing-key-expression: '''fila-transporte-pedidos'''
+          eventoPedidoProcessado-out-0:
+            producer:
+              routing-key-expression: '''evento-pedido-processado'''
+          eventoPedidoEntregue-out-0:
+            producer:
+              routing-key-expression: '''evento-pedido-entregue'''
+
+server:
+  port: 8080
