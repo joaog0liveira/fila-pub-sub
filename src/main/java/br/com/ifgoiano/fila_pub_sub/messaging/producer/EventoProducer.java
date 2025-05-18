@@ -1,4 +1,4 @@
-package br.com.ifgoiano.fila_pub_sub.controller;
+package br.com.ifgoiano.fila_pub_sub.messaging.producer;
 
 import br.com.ifgoiano.fila_pub_sub.model.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;

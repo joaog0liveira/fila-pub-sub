@@ -1,5 +1,7 @@
-package br.com.ifgoiano.fila_pub_sub.controller;
+package br.com.ifgoiano.fila_pub_sub.messaging.consumer;
 
+import br.com.ifgoiano.fila_pub_sub.messaging.producer.EventoProducer;
+import br.com.ifgoiano.fila_pub_sub.messaging.producer.TransporteProducer;
 import br.com.ifgoiano.fila_pub_sub.model.Pedido;
 import br.com.ifgoiano.fila_pub_sub.model.StatusPedido;
 import org.springframework.context.annotation.Bean;
@@ -21,14 +23,14 @@ public class PedidoProcessorConsumer {
     @Bean
     public Consumer<Pedido> processarPedido() {
         return pedido -> {
-            System.out.println("📦 Processando pedido: " + pedido.getId());
+            System.out.println("Processando pedido: " + pedido.getId());
 
             pedido.setStatus(StatusPedido.PROCESSADO);
 
             transporteProducer.enviarParaTransporte(pedido);
             eventoProducer.publicarEventoPedidoProcessado(pedido);
 
-            System.out.println("✅ Pedido processado e enviado para transporte: " + pedido.getId());
+            System.out.println("Pedido processado e enviado para transporte: " + pedido.getId());
         };
     }
 }

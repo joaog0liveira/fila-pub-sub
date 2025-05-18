@@ -1,4 +1,5 @@
-package br.com.ifgoiano.fila_pub_sub.controller;
+package br.com.ifgoiano.fila_pub_sub.messaging.consumer;
+
 
 import br.com.ifgoiano.fila_pub_sub.model.Pedido;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +8,12 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TransporteProducer {
+public class EventoEntregaProducer {
 
     @Autowired
     private StreamBridge streamBridge;
 
-    public void enviarParaTransporte(Pedido pedido) {
-        streamBridge.send("enviarParaTransporte-out-0", MessageBuilder.withPayload(pedido).build());
+    public void publicarEventoPedidoEntregue(Pedido pedido) {
+        streamBridge.send("eventoPedidoEntregue-out-0", MessageBuilder.withPayload(pedido).build());
     }
 }

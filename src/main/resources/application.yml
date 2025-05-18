@@ -3,12 +3,18 @@ spring:
     name: fila-pub-sub
 
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: gorilla.lmq.cloudamqp.com
+    port: 5671
+    username: pdywdzlb
+    password: rkYgRy9cvKRXupNo5PfyKJx-YG5MjXIe
+    virtual-host: pdywdzlb
+    ssl:
+      enabled: true
 
   cloud:
+    function:
+      definition: processarPedido;transportarPedido;notificarPedidoProcessado;notificarPedidoEntregue;auditarPedidoProcessado;auditarPedidoEntregue
+
     stream:
       defaultBinder: rabbit
       bindings:
@@ -43,7 +49,7 @@ spring:
           destination: evento-pedido-entregue
           content-type: application/json
 
-        # Consumers: serviços interessados nos eventos
+        # Consumers: serviÃ§os interessados nos eventos
         notificarPedidoProcessado-in-0:
           destination: evento-pedido-processado
           content-type: application/json
