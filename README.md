@@ -64,10 +64,6 @@ Desenvolver um sistema distribuído robusto e escalável que simule:
   - No caso precisaria do usuário pessoal (do João Gabriel) para qualquer alteração que queria fazer na interface do CloudAMQP, porém o projeto já está todo configurado
   para rodar em qualquer máquina de acordo com o que foi pedido no projeto.
 
-- **Executando RabbitMQ localmente (opcional):**
-  - Acesse: [http://localhost:15672](http://localhost:15672)
-  - Credenciais padrão: `guest / guest`
-
 ---
 
 ### Criação de Filas e Exchanges
